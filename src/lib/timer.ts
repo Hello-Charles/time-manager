@@ -12,9 +12,11 @@ import type { SQLiteDatabase } from 'expo-sqlite';
  */
 export async function startTimer(db: SQLiteDatabase, activityId: number): Promise<void> {
   const now = Date.now();
-  await db.withExclusiveTransactionAsync(async (txn) => {
-    await txn.runAsync('UPDATE time_records SET end_ts = ?, updated_at = ? WHERE end_ts IS NULL', now, now);
-    await txn.runAsync(
+  // 注：withExclusiveTransactionAsync 在 Web 端不支持，用普通事务（回调内直接用 db）；
+  // 单活动约束由数据库唯一索引兜底，普通事务对单用户本地应用已足够
+  await db.withTransactionAsync(async () => {
+    await db.runAsync('UPDATE time_records SET end_ts = ?, updated_at = ? WHERE end_ts IS NULL', now, now);
+    await db.runAsync(
       "INSERT INTO time_records (activity_id, start_ts, end_ts, note, created_at) VALUES (?, ?, NULL, '', ?)",
       activityId,
       now,

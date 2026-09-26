@@ -82,11 +82,13 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
   const version = row?.user_version ?? 0;
   if (version >= 1) return;
 
-  await db.withExclusiveTransactionAsync(async (txn) => {
-    await txn.execAsync(SCHEMA);
+  // 注：withExclusiveTransactionAsync 在 Web 端（wa-sqlite）不支持，统一用普通事务；
+  // withTransactionAsync 的回调不传事务对象，查询直接用外层 db
+  await db.withTransactionAsync(async () => {
+    await db.execAsync(SCHEMA);
     const now = Date.now();
     for (const [i, a] of PRESET_ACTIVITIES.entries()) {
-      await txn.runAsync(
+      await db.runAsync(
         'INSERT INTO activities (name, color, icon, sort_order, is_builtin, created_at) VALUES (?, ?, ?, ?, 1, ?)',
         a.name,
         a.color,
@@ -95,7 +97,7 @@ export async function migrateDb(db: SQLiteDatabase): Promise<void> {
         now,
       );
     }
-    await txn.execAsync('PRAGMA user_version = 1;');
+    await db.execAsync('PRAGMA user_version = 1;');
   });
 }
 

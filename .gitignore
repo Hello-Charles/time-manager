@@ -41,3 +41,6 @@ example
 # generated native folders
 /ios
 /android
+
+# 测试脚本产物
+scripts/screenshots/
