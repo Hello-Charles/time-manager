@@ -77,6 +77,12 @@
 - **导出**：expo-file-system（File/Paths API）写缓存目录 + expo-sharing 分享；文件名 `time-backup-YYYYMMDD-HHmmss.csv`。
 - **不引入**：状态管理库（React state + Context 足够）、后端、推送、账号。
 
+## 6.4 远程仓库
+
+- **GitHub 私有仓库**：https://github.com/Hello-Charles/time-manager（账号 Hello-Charles，默认分支 main）
+- **网络注意**：本机网络对 github.com 有 DNS 阻断，git 已配置全局代理 `http://127.0.0.1:10808`（用户代理软件），推送/拉取需代理软件运行；api.github.com 可直连
+- **协作者拉取**：私有仓库需在仓库 Settings → Collaborators 邀请对方 GitHub 账号；被邀请人 clone 后运行 `npm install` + `npx expo start` 即可开发预览
+
 ## 6.5 构建与发布记录
 
 - **EAS 项目**：@charlesbh/time-manager（项目 ID `7ad6b497-d616-447f-8da6-a70c0df804df`，账号 charlesbh / c669161185@gmail.com）
