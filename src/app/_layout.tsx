@@ -1,18 +1,25 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+// src/app/_layout.tsx — 根布局：SQLiteProvider（建库迁移）+ 主题 + 路由栈
+import { Suspense } from 'react';
+import { ActivityIndicator, View, useColorScheme } from 'react-native';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import { SQLiteProvider } from 'expo-sqlite';
+import { migrateDb } from '@/db/database';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
-
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
+  const scheme = useColorScheme();
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
+    <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+      {/* useSuspense：onInit 建库完成前显示加载圈，保证页面挂载时数据库就绪 */}
+      <Suspense
+        fallback={
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <ActivityIndicator size="large" />
+          </View>
+        }>
+        <SQLiteProvider databaseName="timelog.db" onInit={migrateDb} useSuspense>
+          <Stack screenOptions={{ headerShown: false }} />
+        </SQLiteProvider>
+      </Suspense>
     </ThemeProvider>
   );
 }

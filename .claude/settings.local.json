@@ -5,7 +5,13 @@
       "Bash(rmdir \"D:/vibecoding/时间管理app/time-manager\" 2>/dev/null && echo \"已删除残留目录\" || echo \"仍被占用（空目录，不影响项目，稍后再清）\")",
       "Bash(git add *)",
       "Bash(git commit -m 'chore: 初始化 Expo SDK 57 项目脚手架并安装依赖 *)",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "WebFetch(domain:docs.expo.dev)",
+      "Bash(npx expo *)",
+      "Bash(rm -f src/app/index.tsx src/app/explore.tsx src/components/animated-icon.tsx src/components/animated-icon.web.tsx src/components/animated-icon.module.css src/components/app-tabs.tsx src/components/app-tabs.web.tsx src/components/external-link.tsx src/components/hint-row.tsx src/components/themed-text.tsx src/components/themed-view.tsx src/components/web-badge.tsx src/components/ui/collapsible.tsx src/hooks/use-theme.ts src/hooks/use-color-scheme.ts src/hooks/use-color-scheme.web.ts)",
+      "Bash(rm -rf src/components/ui assets/images/tabIcons)",
+      "Bash(npx tsc *)",
+      "Bash(echo \"=== typecheck exit: $? ===\")"
     ],
     "additionalDirectories": [
       "D:\\vibecoding\\时间管理app\\time-manager"
