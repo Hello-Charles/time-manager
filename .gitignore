@@ -44,3 +44,6 @@ example
 
 # 测试脚本产物
 scripts/screenshots/
+
+# 构建产物
+*.apk
