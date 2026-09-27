@@ -1,4 +1,6 @@
-# 时间管理 App — 项目文档
+# 时光鸭 App — 项目文档
+
+> 应用显示名：**时光鸭**（曾用名「时间管理」）。技术标识不变：slug `time-manager`、包名 `com.example.timemanager`、GitHub 仓库与 EAS 项目名均保留原值。
 
 ## 0. 项目规则（最重要，整个项目期必须遵守）
 
@@ -88,6 +90,7 @@
 - **EAS 项目**：@charlesbh/time-manager（项目 ID `7ad6b497-d616-447f-8da6-a70c0df804df`，账号 charlesbh / c669161185@gmail.com）
 - **出 APK 命令**：`EXPO_TOKEN=... eas build --platform android --profile preview --non-interactive`（preview = 内部分发 APK，签名密钥由 EAS 托管）
 - **首个正式版**：v1.0.0，2026-09-26 构建成功，APK 在项目根目录（已 gitignore），构建详情：https://expo.dev/accounts/charlesbh/projects/time-manager/builds/ed9346ea-0620-4ed7-962e-18cbda6d09d6
+- **v1.1.0（2026-09-27）**：应用显示名改为「时光鸭」，图标换成用户提供的黄色小鸭。源图存于 `assets/images/icon-source-duck.png`（1024×1024 透明底），全套图标由 `scripts/gen-icons.ps1` 生成（图标前景/单色剪影占画布 65%，启动图 70% 高，favicon 满幅）；自适应图标底色保持浅蓝 `#E6F4FE`，开屏底色 `#208AEF`
 - **改代码后出新版**：提交 git → 重跑上述构建命令 → 下载新 APK 覆盖安装即可（版本号在 app.json 的 `expo.version`）
 
 ## 7. 未来可扩展方向（不在本期）

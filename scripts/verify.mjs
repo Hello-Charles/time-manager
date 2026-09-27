@@ -29,6 +29,15 @@ try {
   await page.goto(BASE, { timeout: 120000 });
   await page.getByText('开始计时', { exact: true }).waitFor({ timeout: 120000 });
 
+  console.log('▶ 品牌：名称与图标');
+  const title = await page.title();
+  check('网页标题为「时光鸭」', title.includes('时光鸭'), `标题: ${title}`);
+  // 页面无 link 标签，浏览器默认请求 /favicon.ico（Expo 由 web.favicon 自动生成）
+  const favRes = await fetch(BASE + '/favicon.ico');
+  const favBuf = Buffer.from(await favRes.arrayBuffer());
+  const isIco = favBuf.length >= 4 && favBuf[0] === 0 && favBuf[1] === 0 && favBuf[2] === 1 && favBuf[3] === 0;
+  check('favicon.ico 已替换为小鸭图标', favRes.status === 200 && isIco && favBuf.length > 5000, `${favBuf.length}B`);
+
   console.log('▶ 预置活动');
   for (const name of ['工作', '学习', '运动', '休息', '通勤', '家务', '娱乐', '睡觉']) {
     check(`预置活动「${name}」`, (await page.getByText(name, { exact: true }).count()) > 0);
@@ -96,6 +105,7 @@ try {
   await page.getByRole('tab', { name: '设置' }).click();
   await page.getByText('导出 CSV 备份').waitFor({ timeout: 10000 });
   check('导出按钮存在', true, '');
+  check('关于显示「时光鸭」', (await page.locator('body').innerText()).includes('时光鸭 v'), '');
 
   console.log('\n=== 结果 ===');
   console.log(`通过 ${passed.length} 项，失败 ${failed.length} 项`);

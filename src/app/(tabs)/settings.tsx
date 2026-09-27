@@ -98,7 +98,7 @@ export default function SettingsScreen() {
         <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>关于</Text>
       </View>
       <Text style={[styles.aboutText, { color: colors.textSecondary }]}>
-        时间管理 v{version}{'\n'}所有数据仅保存在本机，不会上传到任何服务器
+        时光鸭 v{version}{'\n'}所有数据仅保存在本机，不会上传到任何服务器
       </Text>
 
       {formTarget !== undefined && (
